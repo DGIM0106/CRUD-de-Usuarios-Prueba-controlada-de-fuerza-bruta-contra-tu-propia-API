@@ -37,15 +37,15 @@ pip install fastapi uvicorn sqlmodel
 
 ### Iniciar el servidor
 ```bash
-uvicorn ApiCRUD:app --reload --port 8000
+uvicorn ApiCRUD:app --reload --port 5000
 ```
 
 ### Verificar que la API está funcionando
-La API estará disponible en: http://localhost:8000
+La API estará disponible en: http://localhost:5000
 
 Puedes verificar la documentación interactiva en:
-- http://localhost:8000/docs
-- http://localhost:8000/redoc
+- http://localhost:5000/docs
+- http://localhost:5000/redoc
 
 ## Estructura de la API
 
