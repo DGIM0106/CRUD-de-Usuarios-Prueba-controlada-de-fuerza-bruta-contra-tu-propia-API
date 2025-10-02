@@ -10,7 +10,7 @@ class User(SQLModel):
     email : str = None 
     is_activate : bool
 
-User_Dbd = [User(id=1, username= "DGIM", password="210",email="daniel@gmail.com",is_activate=True)]
+User_Dbd = [User(id=1, username= "DGIM", password="123",email="daniel@gmail.com",is_activate=True)]
 
 class UserIn(SQLModel):
     id : int
@@ -57,12 +57,18 @@ def User_Update(id: int, data: Usermod):
             return {"message": "Usuario actualizado", "user": user}
     return {"message": "Usuario no encontrado"}
 
+@app.delete("/deleteUser/{id}", response_model=User)
+def delete_user(id: int):
+    for usuario in User_Dbd:
+        if usuario.id == id:
+            User_Dbd.remove(usuario)  
+            return usuario          
+    raise {"message": "Usuario Eliminado"}
+
 @app.post("/login")
 def Sign_in(data: Userlogin):
     for user in User_Dbd:
         if user.username == data.username and user.password == data.password:
             return {"message": "Login Exitoso"}
     return {"message": "Login Fallido"}
-
-
 
