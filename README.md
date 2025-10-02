@@ -179,8 +179,8 @@ curl -X GET "http://localhost:8000/users"
 
 Al ejecutar las pruebas de fuerza bruta, observarás:
 
-- **Intentos fallidos:** Indicados con "Falló" o "❌"
-- **Login exitoso:** Indicado con "CONTRASEÑA ENCONTRADA" o "✅"
+- **Intentos fallidos:** Indicados con "Falló" 
+- **Login exitoso:** Indicado con "CONTRASEÑA ENCONTRADA" 
 - **Estadísticas:** Número total de intentos y tasa de éxito
 - **Tiempo de ejecución:** Tiempo total del ataque
 
