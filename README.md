@@ -1,66 +1,117 @@
-# CRUD-de-Usuarios-Prueba-controlada-de-fuerza-bruta-contra-tu-propia-API
-# API CRUD de Usuarios + Pruebas de Seguridad
+# API CRUD con FastAPI y Script de Fuerza Bruta
 
-## Descripción
-Este proyecto implementa una API REST con operaciones CRUD para gestión de usuarios, junto con pruebas éticas de fuerza bruta para análisis de seguridad en entornos controlados.
+Este proyecto consiste en una API CRUD basica desarrollada con FastAPI y un script de bash para realizar pruebas de fuerza bruta contra el endpoint de login.
 
-## Características Principales
-- API REST con FastAPI
-- Operaciones CRUD completas para usuarios
-- Sistema de autenticación básico
-- Pruebas de seguridad éticas con scripts de fuerza bruta
-- Base de datos en memoria
+## Estructura del Proyecto
 
-## Requisitos Previos
-- Python 3.8 o superior
-- pip (gestor de paquetes de Python)
-
-## Instalación y Configuración
-
-### 1. Crear entorno virtual
-```bash
-python -m venv venv
-
-# Activación en Linux/Mac:
-source venv/bin/activate
-
-# Activación en Windows:
-venv\Scripts\activate
+```
+ApiCRUD.py          # API FastAPI con operaciones CRUD para usuarios
+bash.sh            # Script de fuerza bruta para testing
 ```
 
-### 2. Instalar dependencias
-```bash
-pip install fastapi uvicorn sqlmodel
+## API FastAPI - ApiCRUD.py
+
+### Caracteristicas
+- **Framework**: FastAPI con SQLModel
+- **Almacenamiento**: Lista en memoria (para demostracion)
+- **Endpoints disponibles**:
+
+| Metodo | Endpoint | Descripcion |
+|--------|----------|-------------|
+| POST | /users | Registrar nuevo usuario |
+| GET | /users | Listar todos los usuarios |
+| GET | /users/{id} | Obtener usuario por ID |
+| PUT | /users/{id} | Actualizar usuario |
+| DELETE | /deleteUser/{id} | Eliminar usuario |
+| POST | /login | Autenticar usuario |
+
+### Modelos de Datos
+
+```python
+class User(SQLModel):
+    id: int
+    username: str
+    password: str
+    email: str = None
+    is_activate: bool
 ```
 
-## Ejecución de la API
-
-### Iniciar el servidor
+### Ejecutar la API
 ```bash
-uvicorn ApiCRUD:app --reload 
+uvicorn ApiCRUD:app --reload --port 8000
 ```
 
-### Verificar que la API está funcionando
-La API estará disponible en: http://localhost
+## Script de Fuerza Bruta - bash.sh
 
-Puedes verificar la documentación interactiva en:
-- http://localhost/docs
-- http://localhost/redoc
+### Proposito
+Script educativo para demostrar vulnerabilidades de seguridad cuando se usan contrasenas numericas cortas.
 
-## Estructura de la API
+### Caracteristicas
+- Ataque de fuerza bruta contra el endpoint /login
+- Configuracion personalizable de longitud de contrasena
+- Monitoreo en tiempo real del progreso
+- Manejo de respuestas HTTP
 
-### Endpoints disponibles:
+### Uso
+```bash
+chmod +x bash.sh
+./bash.sh
+```
 
-**Gestión de Usuarios:**
-- POST /users - Crear nuevo usuario
-- GET /users - Listar todos los usuarios
-- GET /users/{id} - Obtener usuario por ID
-- PUT /users/{id} - Actualizar usuario (excepto contraseña)
-- DELETE /users/{id} - Eliminar usuario
+### Parametros solicitados:
+- **Email**: Correo del usuario objetivo (por defecto: daniel@gmail.com)
+- **Longitud de contrasena**: Numero de digitos (por defecto: 3)
 
-**Autenticación:**
-- POST /login - Iniciar sesión
+## Advertencia de Seguridad
 
-## Conclusión
+**ESTE PROYECTO ES SOLO PARA FINES EDUCATIVOS**
 
-Este proyecto demuestra cómo implementar una API CRUD básica y cómo realizar pruebas de seguridad controladas para entender vulnerabilidades comunes. Los resultados ayudan a comprender la importancia de implementar medidas de seguridad robustas en aplicaciones web.
+- La API almacena contrasenas en texto plano (NO SEGURO)
+- El script de fuerza bruta demuestra una vulnerabilidad real
+- NO usar en produccion sin implementar medidas de seguridad adecuadas
+
+## Mejoras de Seguridad Recomendadas
+
+1. Hash de contrasenas (bcrypt, argon2)
+2. Limites de intentos de login
+3. Contrasenas complejas (minimo 8 caracteres, mezcla de tipos)
+4. Rate limiting en endpoints de autenticacion
+5. Almacenamiento seguro en base de datos
+
+## Ejemplo de Ejecucion
+
+```
+=== Ataque de Fuerza Bruta ===
+Email: daniel@gmail.com
+Longitud: 3
+Total combinaciones: 1000
+
+Iniciando ataque de fuerza bruta...
+Probando 1000 combinaciones posibles
+
+Intento 10/1000 - Probando: 009
+Intento 20/1000 - Probando: 019
+...
+>>> CONTRASENA ENCONTRADA! 214
+
+=== RESULTADO FINAL ===
+EXITO! Contrasena encontrada: 214
+Numero de intentos: 215
+Tiempo: Fri Dec 13 10:30:45 UTC 2024
+```
+
+## Requisitos
+
+- Python 3.7+
+- FastAPI
+- SQLModel
+- Uvicorn
+- curl (para el script bash)
+
+## Notas
+
+Este proyecto demuestra la importancia de:
+- Usar contrasenas fuertes y unicas
+- Implementar hash seguro de contrasenas
+- Anadir medidas anti-fuerza bruta
+- Realizar pruebas de seguridad regulares
