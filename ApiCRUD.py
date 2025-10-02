@@ -10,7 +10,7 @@ class User(SQLModel):
     email : str = None 
     is_activate : bool
 
-User_Dbd = [User(id=1, username= "DGIM", password="2106",email="daniel@gmail.com",is_activate=True)]
+User_Dbd = [User(id=1, username= "DGIM", password="210",email="daniel@gmail.com",is_activate=True)]
 
 class UserIn(SQLModel):
     id : int
