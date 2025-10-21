@@ -1,3 +1,2 @@
-"fastapi[standard]"
-fastapi
+fastapi[standard]
 sqlmodel
